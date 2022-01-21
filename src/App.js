@@ -22,6 +22,7 @@ import jwt_decode from 'jwt-decode'
 
 function App() {
   const token =  localStorage.getItem("token")
+
   // check si l'user a la perm admin
   const checkPermUser = (component) => {
     const token = localStorage.getItem("token")

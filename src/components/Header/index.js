@@ -25,10 +25,26 @@ export default function header() {
     document.querySelector("#slidebar").style.padding = "1rem"
   }
 
+  const handleNav = () => {
+    document.querySelector("#slidebar").style.width="0px";
+    document.querySelector("#slidebar").style.padding="0rem"
+  }
+
 
   const loginNav = () => {
     
     if (token) {
+
+      return (
+        <nav className="navBar">
+          <div className="toggle hiddenNav">
+            <NavLink onClick={handleNav} to="/recherche"><Icon name='search' /></NavLink>
+            <NavLink onClick={handleNav} to="/profil"><Icon name='user circle' /></NavLink>
+            <NavLink onClick={handleNav} to="/logout"><Icon color="red" name='log out' /></NavLink>
+          </div>
+
+        </nav>
+
       const dataToken = jwt_decode(token);
       if(dataToken.role === "user") {
         return (
@@ -52,8 +68,18 @@ export default function header() {
         )
       }
 
+
       
     } else {
+
+      return (
+        <nav className="navBar">
+          <NavLink onClick={handleNav} to="/recherche"><Icon name='search' /></NavLink>
+          <NavLink onClick={handleNav} to="/signup">Inscription</NavLink>
+          <Connexion />
+        </nav>
+      )
+
         return (
           <nav className="navBar">
             <NavLink to="/recherche">Rechercher une activité</NavLink>
@@ -61,6 +87,7 @@ export default function header() {
             <Connexion />
           </nav>
         )
+
     }
   }
 
