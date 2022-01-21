@@ -1,77 +1,83 @@
 import './style.css'
-import Logo from '../../img/Yanis.png'
+import { useEffect } from 'react'
+import Yanis from '../../img/Yanis.png'
 import Fred from '../../img/Fred.jpeg'
-import { Card, Image } from 'semantic-ui-react'
+import Fabien from '../../img/Fabien.jpg'
+import Alex from '../../img/Alex.jpg'
+import Cossi from '../../img/Cossi.png'
+import {Card} from 'semantic-ui-react'
 export default function About() {
 
+    useEffect(() => {
+        document.title = "Qui sommes-nous"
+     }, []);
+
     return (
+        
         <div id="about">
-            <Card>
-                <Image src={Logo} wrapped ui={false} />
+            <Card className="box--card__aboutus">
+                <img alt ="profil--Yanis" className="Image__card" src={Yanis} wrapped ui={false} alt="Photo dev" />
                 <Card.Content>
                     <Card.Header>Yanis</Card.Header>
                     <Card.Meta>
-                        <span className='about--name'>Developpeur FrontEnd / Lead Dev Front</span>
+                        <span className='about--name'>Dev Front </span>
                     </Card.Meta>
                     <Card.Description>
-                        Yanis, 18 ans Développeur FrontEnd/Lead Dev
+                       Lead Dev Front
                     </Card.Description>
                 </Card.Content>
-                <Card.Content extra>
-                </Card.Content>
             </Card>
-            <Card>
-                <Image src={Fred} wrapped ui={false} />
+            <Card className="box--card__aboutus">
+                <img className="Image__card" src={Fred} wrapped ui={false} alt="Photo dev" />
                 <Card.Content>
                     <Card.Header>Fredéric</Card.Header>
                     <Card.Meta>
-                        <span className='about--name'>Developpeur BackEnd</span>
+                        <span className='about--name'>Dev Back</span>
                     </Card.Meta>
                     <Card.Description>
-                        Frédéric,  41 ans, Développeur BackEnd
+                        Product Owner 
                     </Card.Description>
                 </Card.Content>
-                <Card.Content extra>
-                </Card.Content>
-            </Card><Card>
-                <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
+                
+            </Card>
+            <Card className="box--card__aboutus">
+                <img className="Image__card"  src={Fabien} wrapped ui={false} alt="Photo dev" />
                 <Card.Content>
                     <Card.Header>Fabien</Card.Header>
                     <Card.Meta>
-                        <span className='name'>Développeur BackEnd / Lead Dev BackEnd</span>
+                        <span className='about--name'>Dev Back </span>
                     </Card.Meta>
                     <Card.Description>
-                        Fabien, 29 ans, Développeur BackEnd / Lead Developpeur BackEnd
+                        Lead Dev Back 
                     </Card.Description>
+                
                 </Card.Content>
-                <Card.Content extra>
-                </Card.Content>
-            </Card><Card>
-                <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
+            </Card>
+            <Card className="box--card__aboutus">
+                <img className="Image__card"  src={Alex} wrapped ui={false} alt="Photo dev" />
                 <Card.Content>
                     <Card.Header>Alexandre</Card.Header>
                     <Card.Meta>
-                        <span className='name'>Développeur FrontEnd</span>
+                        <span className='about--name'>Dev Front</span>
                     </Card.Meta>
                     <Card.Description>
-                        Alexandre, 37 ans, Développeur FrontEnd
+                      Scrum Master
                     </Card.Description>
                 </Card.Content>
-                <Card.Content extra>
-                </Card.Content>
-            </Card><Card>
-                <Image src='https://react.semantic-ui.com/images/avatar/large/matthew.png' wrapped ui={false} />
+                
+            </Card>
+            <Card className="box--card__aboutus">
+                <img className="Image__card"  src={Cossi} wrapped ui={false} alt="Photo dev"/>
                 <Card.Content>
                     <Card.Header>Cossi</Card.Header>
                     <Card.Meta>
-                        <span className='name'>Cossi, Développeur FrontEnd</span>
+                        <span className='about--name'>Dev Front</span>
                     </Card.Meta>
                     <Card.Description>
-                        Cossi, 26 ans, Développeur FrontEnd.
+                       Git Master
                     </Card.Description>
                 </Card.Content>
-                <Card.Content extra>
-                </Card.Content>
+                
             </Card>
         </div>
     )

@@ -3,15 +3,16 @@ import { Button, Form } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./style.css";
-import { Icon } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom'
 import { Input } from "semantic-ui-react";
 import { Radio } from "semantic-ui-react";
 import { Rating } from 'semantic-ui-react'
-import { useWatch } from "react-hook-form";
 
 
 export default function Recherche() {
+    useEffect(() => {
+        document.title = "Recherchez une activité"
+     }, []);
 
     const [zipcode, setZipCode] = useState("");
 
@@ -26,11 +27,11 @@ export default function Recherche() {
     const [activityLength, setActivityLength] = useState(0)
 
     const [activityOpen, setActivityOpen] = useState(false)
+    const [activityError,setActivityError] = useState()
 
     const inputCode = async () => {
         try {
             const responce = await axios.get(`https://geo.api.gouv.fr/communes?nom=${town}&fields=nom,codeDepartement&limit=${limitData}&boost=population`);
-            // eslint-disable-next-line array-callback-return
             setDataTown(responce.data)
         }
         catch (error) {
@@ -69,9 +70,6 @@ export default function Recherche() {
             free
         })
 
-    
-
-
         if (response.data.activities) {
             setActivityOpen(true)
             setDataActivity(response.data.activities)
@@ -83,7 +81,7 @@ export default function Recherche() {
         }
         else {
             setActivityOpen(false)
-            setDataActivity(response.data.error)
+            setActivityError(response.data.error)
             console.log(response.data.error)
         }
     }
@@ -94,25 +92,23 @@ export default function Recherche() {
 
         if (activityOpen) {
             for (let i = 0; i < activityLength; i++) {
-                const link = `/detailactivity/${dataActivity[i].id}`
+                const link = `/detailactivity/${dataActivity[i]?.id}`
                 row.push(
-                    <div className="box-card" key={dataActivity[i].id}>
+                    <div className="box-card" key={dataActivity[i]?.id}>
                         <NavLink className="div-nav" to={link}>
                             <article className="article--main">
                                 <div className="text">
                                     <h4>
-                                        {dataActivity[i].title}
+                                        {dataActivity[i]?.title}
                                     </h4>
                                     <p>
-                                        {dataActivity[i].description}
+                                        {dataActivity[i]?.description}
                                     </p>
-                                    <button>en savoir  +</button>
+                                    <button className = "article--button" > En savoir plus </button>
                                 </div>
 
                                 <div className="box--img--note">
-                                    <img src={dataActivity[i].url} alt="" width="500" height="300" />
-
-                                    <Rating className="star-rating" icon='star' defaultRating={3} maxRating={5} />
+                                    <img src={dataActivity[i]?.url} alt="" width="500" height="300" />
                                 </div>
 
                             </article>
@@ -122,15 +118,17 @@ export default function Recherche() {
             }
         }
         else {
-            row.push(<h2 id="h2--error" key="error">{dataActivity}</h2>)
+            row.push(<h2 id="h2--error" key="error">{activityError}</h2>)
         }
 
         return row
     }
 
-
     return (
         <div id="recherche">
+            <h2 className = "body--title" >
+                Recherchez les activités dans la ville de votre choix. 
+            </h2>
             <Form id="form--activity" method="POST" onSubmit={handleSubmit}>
                 <Form.Field
                     control={Input}
@@ -140,15 +138,15 @@ export default function Recherche() {
                     name="town"
                     icon="search"
                     label="Ville"
-                    placeholder="Entrez une ville"
+                    placeholder="Veuillez sélectionner une ville"
                     value={town}
+                    autoFocus
                     onChange={(evt) => {
                         setTown(evt.target.value);
                         setActiveChangeInput(true)
                         document.querySelector("#form--activity ul").style.display = "block"
                     }}
                 />
-
                 <ul>
                     {jsxVille()}
                 </ul>
@@ -178,7 +176,7 @@ export default function Recherche() {
 
 
                 <Button className="button-submit green" type="submit">
-                    Submit
+                    Rechercher
                 </Button>
             </Form>
 

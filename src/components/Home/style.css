@@ -1,88 +1,268 @@
-
-
-#main .article--main{
+#main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+  }
+  
+  #main .article--main{
     width: 100%;
     padding: 1rem  0;  
     text-align: center; 
-}
-
-#main .article--main > h2{
+    margin-left: 5rem;
+  }
+  
+  #main .article--main > h2{
     font-size: 2rem;
     font-weight: bold;
-}
-
-
-#main .box-best--actives{
+  }
+  
+  
+  #main .box-best--actives{
     width: 100%;
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
     text-align: center;
-}
-
-#main    .box-card{
+  }
+  
+  #main    .box-card{
     display: flex;
     margin-top: 4rem;
     width: 80%;
-    box-shadow:11px -9px 13px -3px rgba(0,0,0,0.5),0px 10px 13px -7px #000000;
-    padding: 2rem;
+    padding: 1rem;
     border-radius: 10px;
     background: white;
     cursor: pointer;
     position: relative;
-}
-.div-nav{
+  }
+  .div-nav{
     color: black;
-}
-.div-nav:hover{
+    width: 90%;
+  }
+  .div-nav:hover{
     color: black;
-}
-
-#main .box-card .article--main{
-    display: flex;
-    align-items: center;
-}
-
-#main .box--img--note{
+  }
+  
+  #main .box--img--note{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50%;
-}
-
-#main .box--img--note > img{
-    margin-bottom: 20px;
+    width: 60%;
+    height: 80%;
+    padding-left:7rem ;
+  }
+  
+  
+  #main .box--img--note > img{
+    margin-bottom: 10px;
+    margin-top: 10px;
     border-radius: 10px;
-}
-
-
-#main .text{
-    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-height: 20rem;
+    height: 80%;
+    object-fit: cover;
+  }
+  
+  
+  #main .text{
+    width: 100%;
     padding: 0 2rem;
-}
-
-#main .text > h4{
+    font-size: 1.6em;
+  }
+  
+  #main .text > h4{
     font-size: 2rem;
     margin-bottom: 30px;
-}
-
-
-.box--zom .doubletest{
+    font-family: 'Comfortaa', sans-serif;
+  }
+  
+  #h2--error{
+    font-size: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+  }
+  .box--zom .doubletest{
     display: flex !important;
-}
+  }
+  .article--button{
+    border-radius: 10px;
+    background-color: #42A1F5;
+    border: none;
+    padding:.5rem;
+    color: white;
+    font-size: .7em;
+  }
+
+  .article--button:hover{
+    cursor: pointer;
+  }
+
+  .box--text > h2{
+    font-family: 'Comfortaa', sans-serif;
+  }
+
+  .body--text{
+    color: black;
+    font-size: 1.4em;
+    margin-top: 1em;
+    margin-bottom: 2em;
+  }
+
+    .body--title {
+      color:black;
+      font-size: 2em;
+      margin:0;
+      font-family: 'Comfortaa', sans-serif;
+    }
+
+  @media screen and (max-width:700px){
+    #main .box--img--note >img{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      
+      height: 20rem;
+    }
+    #main .box--img--note{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin-right: 1rem;
+      padding-top: 2rem;
+    }
+    
+    #main .text{
+
+      width: 100%;
+      padding: 0 2rem;
+      font-size: 1.6em;
+    }
+    
+    #main{
+      display: flex;
+      flex-direction: column;
+      justify-content:center;
+      align-items: center;
+
+    }
+    #main .div-nav{
+      display: flex;
+      flex-direction:column;
+      color: black;
+      width: 100%;
+
+    }
+   
+    #main .box-card{
+      display: flex;
+      margin-top: 4rem;
+      width: 90%;
+      padding: 1rem;
+      border-radius: 10px;
+      background: white;
+      cursor: pointer;
+      position: relative;
+    }
+    #main .article--main {
+      width: 100%;
+      display: flex;
+      flex-direction: column ;
+      align-content:center;
+      margin: 0;
+    }
+   
+  }
 
 
-#slider{
+  @media screen and (max-width:1200px) {
+    #main .box--img--note >img{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 80%;
+    
+    }
+    #main .box--img--note{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100% !important;
+      margin-right: 7rem;
+      padding-top: 2rem;
+    }
+    
+    #main .text{
+
+      width: 100% !important;
+      padding: 0 2rem;
+      font-size: 1.6em;
+    }
+    
+    #main{
+      display: flex;
+      flex-direction: column;
+      justify-content:center;
+      align-items: center;
+
+    }
+    #main .div-nav{
+      display: flex;
+      flex-direction:column;
+      color: black;
+      width: 100%;
+
+    }
+   
+    #main .box-card{
+      display: flex;
+    margin-top: 4rem;
+    width: 90%;
+    padding: 1rem;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+    position: relative;
+    }
+    #main .article--main {
+      width: 100%;
+      display: flex;
+      flex-direction: column ;
+      /* align-content:center; */
+      margin: 0;
+    }
+   
+  }
+  
+  #slider{
     width: 100%;
     display: flex;
     justify-content: center;
     margin-top: 1rem;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4rem;
 }
 
+
+
 #slider .box--slider{
-    background: rgb(99, 150, 243);
+    background: #42A1F5;
     padding: 2rem;
     width: 80%;
     text-align: center;
@@ -91,6 +271,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 9px 4px 5px -6px rgba(0,0,0,0.24);
+
 }
 
 .button-left{
@@ -103,8 +285,6 @@
     cursor: pointer;
 }
 
-
-
 .box--text{
     width: 80%;
 }
@@ -116,4 +296,46 @@
 
 .box--text > span{
     font-weight: bold;
+}
+
+@media screen and (max-width:700px){
+  #slider .box--slider{
+    width: 90%;
+  }
+  #main .box--img--note {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 1rem !important;;
+  }
+
+  
+
+  .body--title {
+    text-align: center;
+  }
+
+  .body--text {
+    text-align: center;
+  }
+
+  #main .text > p{
+    
+    font-size: 1rem !important;
+  }
+
+  #main .text > h4{
+    /* padding:  0 1.5rem; */
+    font-size: 1.5rem !important;
+  }
+
+  
+}
+@media screen and (max-width:1200px){
+  #slider .box--slider{
+    width: 90%;
+  }
+  
+
+  
+  
 }

@@ -2,14 +2,21 @@ import React from 'react'
 import Comments from './Comments'
 import { Rating } from 'semantic-ui-react'
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router'
+import { useParams, useHistory} from 'react-router'
+
 import { Button } from 'semantic-ui-react'
 import axios from 'axios'
+
+import Page404 from '../Page404'
 //import jwt_decode from 'jwt-decode'
 import './style.css'
 
 
 export default function DetailActivity() {
+  const history = useHistory()
+  useEffect(() => {
+    document.title = "Détail d'une activité"
+ }, []);
   const token = localStorage.getItem("token")
   //const dataToken = jwt_decode(token)
   //let user = dataToken.nickname
@@ -22,7 +29,7 @@ export default function DetailActivity() {
   const [description, setDescription] = useState("")
   const [comment, setComment] = useState()
   const [isFree, setIsFree] = useState()
-  const [posinset, setPosinset] = useState("0")
+  const [posinset, setPosinset] = useState(0)
   const [picture, setPicture] = useState()
   const [receiveComment, setReceiveComment] = useState([])
   const [activityAverageRate, setActivityAverageRate] = useState()
@@ -42,11 +49,23 @@ export default function DetailActivity() {
   const handleTitleComment = (evt) => {
     setTitle(evt.target.value)
   }
-  //handle to submit rate and comment
+  //function for not rate 2 time
+  const secondRateNotPossible = (secondRateAfter) => {
+    document.querySelector(".pvide").textContent = 'Vous ne pouvez pas noter deux fois l\'activité'
+    setPosinset("")
+    setTimeout(secondRateAfter = () => {
+      document.querySelector(".pvide").textContent = ''
+    }, 2000)
+  }
 
-  const handleSubmitComment = async (evt) => {
+
+
+
+  //handle to submit rate and comment
+  const handleSubmitComment = async (evt, callback) => {
     evt.preventDefault();
     const response = await axios.post(`https://kidozanges.herokuapp.com/api/activity/${id}/comment`, {
+
       title,
       rate,
       comment,
@@ -55,11 +74,22 @@ export default function DetailActivity() {
         authorization: `Bearer ${token}`
       }
     })
+    const secondRate = response.data.erreur
+    secondRate ? secondRateNotPossible() :
+      console.log("post", response.data.erreur)
+    getData()
+    setComment('')
+
   }
 
-  useEffect(() => {
+  const getData = () => {
     axios.get(`https://kidozanges.herokuapp.com/api/activity/${id}`)
       .then((response) => {
+        if(response.data.erreur) {
+          return(
+            history.push("/notFound")
+          )
+        }
         setTown(response.data.activity.town)
         setActivityTitle(response.data.activity.title)
         setDescription(response.data.activity.description)
@@ -70,32 +100,35 @@ export default function DetailActivity() {
         setZipCode(response.data.activity.zipcode)
       })
       .catch((error) => {
-        console.error(error)
+        console.log(error)
+        
       })
-  }, [id])
-  console.log(receiveComment)
-  console.log(activityAverageRate)
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
+  
   return (
     <div className="activity__container">
-
       <div className="activity">
         <section className="header--card">
           <img
             src={picture}
             className="activity__detail--img"
-            alt="bordel"
+            alt="activité"
           />
 
           <section id="text--presentation">
-            <p className="activity__detail--rate">Note: {activityAverageRate}/5</p>
+            <p className="activity__detail--rate"> {activityAverageRate > 0.001 ? `Note moyenne: ${activityAverageRate}/5` : "Cette activité n'a pas encore été notée."}</p>
 
             <h1 className="activity__title">{activityTitle}</h1>
             <p className="activity__description">{description}</p>
             <p className="activity__town">{town}-{zipCode} </p>
             {
               (isFree) ?
-                <p className="payable">Cette activité est gratuite</p> :
-                <p className="payable">Payant donne du cache</p>
+                <p className="payable">Cette activité est gratuite.</p> :
+                <p className="payable">Cette activité est payante.</p>
             }
           </section>
         </section>
@@ -108,11 +141,8 @@ export default function DetailActivity() {
           maxRating={5}
           disabled
         />*/}
+
         <div className="chat__comment--container">
-          {console.log("TEST TEST A VOIR")}
-          {console.log(receiveComment)}
-
-
           {receiveComment !== "Cette activité ne contient pas de commentaire" ? <Comments
             class
             listComment={receiveComment}
@@ -123,8 +153,9 @@ export default function DetailActivity() {
           <form className="form__detailActivity"
             action=""
             onSubmit={handleSubmitComment}
-            method="POST">
-            <h3>Mettre un commentaire ?</h3>
+            method="POST"
+            value="dsfsdfsd">
+            <h3>Donner un avis ?</h3>
             <label
               htmlFor="textarea">Commentaire
             </label>
@@ -138,7 +169,7 @@ export default function DetailActivity() {
               rows="10"
             >
             </textarea>
-
+            <p className="pvide"></p>
             <div>
               <Rating
 
@@ -155,8 +186,8 @@ export default function DetailActivity() {
               type="hidden"
               name="rate"
               value={posinset} />
-  
-            <Button  id="button__activity">Envoyer</Button>
+
+            <Button id="button__activity">Envoyer</Button>
           </form>
         </div>
       </div>

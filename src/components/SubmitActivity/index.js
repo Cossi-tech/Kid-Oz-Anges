@@ -2,6 +2,9 @@ import React, { useState,useEffect } from "react";
 import axios from "axios";
 import "./style.css";
 import { Button, Form, Input, Radio, TextArea } from "semantic-ui-react";
+import { useHistory } from "react-router";
+import useModal from "./useModal";
+import ModalSubmit from "./ModalSubmit";
 
 export default function SubmitActivity() {
   const [title, setTitle] = useState("");
@@ -15,7 +18,9 @@ export default function SubmitActivity() {
   const [src, setSrc] = useState('');
   const [activeChangeInput,setActiveChangeInput] = useState(false)
   const [limitData,setLimitData] = useState(5)
-  
+  const history = useHistory()
+
+  const { isShowing, toggle } = useModal();
   
   const handleSubmitActivity = async (evt) => {
     evt.preventDefault();
@@ -30,7 +35,10 @@ export default function SubmitActivity() {
     formData.append('free',free)
     formData.append('town',town)
     console.log(formData)
-
+    //call for setTime Modal return to home after submit
+    const returnToHome = ()=> {
+       history.push("/")
+ }
     axios.post("https://kidozanges.herokuapp.com/api/submitactivity", formData,
     {
       headers: {
@@ -38,7 +46,12 @@ export default function SubmitActivity() {
       },
     },
     
-    )
+    );
+    setTitle("")
+    setDescription('')
+    setTown('')
+    setPicture()
+    setTimeout(returnToHome,1500)
   };
 
   const inputCode = async () => {
@@ -67,12 +80,6 @@ export default function SubmitActivity() {
         return jsx 
       })
 
-
-
-
-
-
-
       return res
     }
   }
@@ -81,7 +88,6 @@ export default function SubmitActivity() {
     inputCode()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [town])
-
 
   return (
     <div className="container">
@@ -92,6 +98,7 @@ export default function SubmitActivity() {
           label="Titre de l'activité"
           placeholder="Titre de l'activité"
           value={title}
+          autoFocus
           onChange={(evt) => {
             setTitle(evt.target.value);
           }}
@@ -100,19 +107,19 @@ export default function SubmitActivity() {
         control={Input}
         type="file"
         name='télécharger une image'
-        placeholder="fichier"
+        label = "Vous pouvez joindre une photo du lieu"
+        placeholder="Photo de l'activité"
         onChange={(evt) => {
           setPicture(evt.target.files[0]);
           setSrc(evt.target.files[0].name)
           console.log(evt.target.files[0])
         }}
         />
-        <img src={src} alt="" width="250" height="250" />
         <Form.Field
           control={TextArea}
           name='description'
-          label="Descrition de l'activité"
-          placeholder="Descrition de l'activité"
+          label="Description de l'activité"
+          placeholder="Description de l'activité, informations utiles..."
           value={description}
           onChange={(evt) => {
             setDescription(evt.target.value);
@@ -137,7 +144,7 @@ export default function SubmitActivity() {
         <ul>
           {jsxVille()}
         </ul>
-        <Form.Group inline>
+        <Form.Group inline className="box--radios">
           <Form.Field
             control={Radio}
             label="Gratuite"
@@ -159,10 +166,13 @@ export default function SubmitActivity() {
             }}
           />
         </Form.Group>
-        <Form.Field id="form--activity__button" control={Button}>
-          Submit
+        <Form.Field id="form--activity__button" control={Button} className="modal-toggle" onClick={toggle}>
+          Proposer cette activité
+          <ModalSubmit isShowing={isShowing} hide={toggle} />
         </Form.Field>
+        
       </Form>
+      
     </div>
   );
 }

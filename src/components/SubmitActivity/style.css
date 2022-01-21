@@ -37,4 +37,25 @@ div.field{
   width: 60%;
   text-align: center;
 }
+.hidden{
+  display: none;
+}
 
+
+@media screen and (max-width:1200px){
+  #form--activity{
+    width: 90%;
+  }
+}
+
+
+@media screen and (max-width:770px){
+  #form--activity{
+    width: 100%;
+  }
+
+  .box--radios{
+    gap: 1rem;
+    justify-content: center;
+  }
+}

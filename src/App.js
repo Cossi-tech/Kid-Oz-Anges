@@ -22,44 +22,31 @@ import jwt_decode from 'jwt-decode'
 
 function App() {
   const token =  localStorage.getItem("token")
-  
-  // condition for check token
-
-  // eslint-disable-next-line no-restricted-globals
-  // if(token){
-  //   const data =  jwt_decode(token)
-  //   const date = new Date()
-  //   const getime  = Math.round(date.getTime() /  1000)
-  //   if(getime >  data.exp){
-  //     return(
-  //       <Redirect to="/logout"/>
-  //     )
-  //   }
-  // }
-
 
   // check si l'user a la perm admin
+  const checkPermUser = (component) => {
+    const token = localStorage.getItem("token")
+
+    if (!token){
+      return(<Page404 />)
+    }
+    else {
+      const dataToken = jwt_decode(token)
+      if (dataToken.role === "user" || dataToken.role === "admin") return (component)
+    }
+  } 
   const checkPermAdmin = () => {
     const token =  localStorage.getItem("token")
     
     if(!token){
-      console.log("pas connecté")
-
       return(
         <Redirect to="/"/>
       )
 
     } 
-    else{
+    else {
       const dataToken = jwt_decode(token)
-      console.log(dataToken.role)
-      console.log("NIckname :   " +   dataToken.nickname)
-
-  
-        
-
       if(dataToken.role === "admin"){
-        console.log("qsdqsdqsdqsdqdqsdqsd")
         return(
           <Admin/>
         )
@@ -72,6 +59,7 @@ function App() {
 
   }
 
+  
   return (
     <div className="App">
       <Header />
@@ -79,7 +67,6 @@ function App() {
       <Switch>
         <Route path="/" exact>
           <Home />
-          {/* Acceuil */}
         </Route>
 
         <Route path="/signup" exact>
@@ -87,59 +74,44 @@ function App() {
         </Route>
 
         <Route path="/submitactivity" exact>
-          <SubmitActivity />
-
-
+          {checkPermUser(<SubmitActivity />)}
         </Route>
 
         <Route path="/detailactivity/:id" exact>
-          <DetailActivity />      
-
+          <DetailActivity />  
         </Route>
 
         <Route path="/aboutus" exact>
             <About/>
-          {/* inscription */}
         </Route>
 
-        <Route path="/admin"   exact >
+        <Route path="/admin"   exact>
             {checkPermAdmin()}
         </Route>
 
         <Route path="/recherche">
-            <Recherche/>
+          <Recherche/>
         </Route>    
 
         <Route path="/logout" exact>
-            <Logout/>
+          <Logout/>
         </Route>
 
-    
-
-      
-        
-       {
-         /*
-          <Route 
-          path="/some-path" 
-          render={() => !isAuthenticated ?
-          <Login/> :
-          <Redirect to="/some-path" />
-      }/>
-*/
-       }
         <Route path="/LegalNotice" exact>
-        <LegalNotice />
+          <LegalNotice />
         </Route>
+
         <Route path="/profil" exact>
-            <Profil />
+          {checkPermUser(<Profil />)}
         </Route>
-        <Route>
+
+        <Route status={404}>
           <Page404 />
         </Route>
 
       </Switch>
-      <Footer />
+
+      <Footer className="footer" />
 
     </div>
   );
