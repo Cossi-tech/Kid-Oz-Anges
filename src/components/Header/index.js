@@ -13,7 +13,7 @@ import SlideBar from './slidebar'
 
 export default function header() {
   const token = localStorage.getItem("token");
-  
+
   /*hamburger.addEventListener("click", () => {
       document.querySelector(".hiddenNav").style.display="block";
   })*/
@@ -26,13 +26,13 @@ export default function header() {
   }
 
   const handleNav = () => {
-    document.querySelector("#slidebar").style.width="0px";
-    document.querySelector("#slidebar").style.padding="0rem"
+    document.querySelector("#slidebar").style.width = "0px";
+    document.querySelector("#slidebar").style.padding = "0rem"
   }
 
 
   const loginNav = () => {
-    
+
     if (token) {
 
       return (
@@ -45,31 +45,32 @@ export default function header() {
 
         </nav>
 
-      const dataToken = jwt_decode(token);
-      if(dataToken.role === "user") {
-        return (
-          <nav className="navBar">
-              <NavLink to="/submitactivity">Soumettre une activité</NavLink>
-              <NavLink to="/recherche">Rechercher une activité</NavLink>
-              <NavLink to="/profil">Profil</NavLink>
-              <NavLink to="/logout">Déconnexion</NavLink>
-          </nav>
-  
-        )
-      } else if(dataToken.role === "admin") {
-        return (
-          <nav className="navBar">
-              <NavLink to="/admin">Administrer</NavLink>
-              <NavLink to="/submitactivity">Soumettre une activité</NavLink>
-              <NavLink to="/recherche">Rechercher une activité</NavLink>
-              <NavLink to="/profil">Profil</NavLink>
-              <NavLink to="/logout">Déconnexion</NavLink>
-          </nav>
-        )
-      }
+        // const dataToken = jwt_decode(token);
+        // if (dataToken.role === "user") {
+        //   return (
+        //     <nav className="navBar">
+        //       <NavLink to="/submitactivity">Soumettre une activité</NavLink>
+        //       <NavLink to="/recherche">Rechercher une activité</NavLink>
+        //       <NavLink to="/profil">Profil</NavLink>
+        //       <NavLink to="/logout">Déconnexion</NavLink>
+        //     </nav>
+
+        //   )
+        // } else if (dataToken.role === "admin") {
+        //   return (
+        //     <nav className="navBar">
+        //       <NavLink to="/admin">Administrer</NavLink>
+        //       <NavLink to="/submitactivity">Soumettre une activité</NavLink>
+        //       <NavLink to="/recherche">Rechercher une activité</NavLink>
+        //       <NavLink to="/profil">Profil</NavLink>
+        //       <NavLink to="/logout">Déconnexion</NavLink>
+        //     </nav>
+        //   )
+        // }
 
 
-      
+
+      )
     } else {
 
       return (
@@ -80,13 +81,7 @@ export default function header() {
         </nav>
       )
 
-        return (
-          <nav className="navBar">
-            <NavLink to="/recherche">Rechercher une activité</NavLink>
-            <NavLink to="/signup">Inscription</NavLink>
-            <Connexion />
-          </nav>
-        )
+
 
     }
   }
@@ -99,8 +94,8 @@ export default function header() {
           <NavLink to="/"><img className="img--header" src={Logo} alt="logo du site" width="300" /></NavLink>
         </div>
         <div className="header--navbar">
-        <NavLink to="/"><h1>Kid'Oz'Anges</h1></NavLink>
-        {loginNav()}
+          <NavLink to="/"><h1>Kid'Oz'Anges</h1></NavLink>
+          {loginNav()}
         </div>
         <div className="box--hamburger">
           <Icon onClick={handleHamburger} id="icon-hamburger" className="icon-hamburger" name='bars' size="big" color="blue" />
